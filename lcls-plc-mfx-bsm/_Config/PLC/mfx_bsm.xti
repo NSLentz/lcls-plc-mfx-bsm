@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<TcSmItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.11" ClassName="CNestedPlcProjDef">
+	<Project GUID="{BCD04636-CC7F-4F9C-AB95-A469A66D08DA}" Name="mfx_bsm" PrjFilePath="..\..\mfx_bsm\mfx_bsm.plcproj" TmcFilePath="..\..\mfx_bsm\mfx_bsm.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+		<Instance File="mfx_bsm Instance.xti"/>
+	</Project>
+</TcSmItem>

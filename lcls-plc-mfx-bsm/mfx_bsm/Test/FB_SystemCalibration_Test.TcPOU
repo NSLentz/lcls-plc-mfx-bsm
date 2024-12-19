@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SystemCalibration_Test" Id="{2c327392-2f50-4f5f-a2d3-d7e83eb579c1}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_SystemCalibration_Test EXTENDS FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

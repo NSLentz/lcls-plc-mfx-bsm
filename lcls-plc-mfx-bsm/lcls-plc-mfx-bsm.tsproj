@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4026.11" TcProjectVariant="UnitTest">
+	<Project ProjectGUID="{C407E83A-AF3B-4298-94EE-1CC81E8F1894}" TargetNetId="199.4.42.250.1.1" Target64Bit="true" ShowHideConfigurations="#x3c6">
+		<System>
+			<Settings>
+				<ProjectVariant PvUseParameter="true">
+					<Variant>
+						<Name>ProductionMachine</Name>
+						<Name>UnitTest</Name>
+						<Parameters RouterMemory="32" CoresPerPkg="0" MaxWinCpus="1" MaxNonWinCpus="0">
+							<Cpu Id="0" Percent="80" BaseTime="10000"/>
+							<Affinity ObjId="#x03000011"/>
+							<Affinity ObjId="#x08500010"/>
+							<Affinity ObjId="#x02010030"/>
+						</Parameters>
+					</Variant>
+				</ProjectVariant>
+			</Settings>
+			<Tasks>
+				<Task Id="3" Disabled="true" Priority="20" CycleTime="100000" AmsPort="350" AdtTasks="true">
+					<Name>PlcTask</Name>
+					<ProjectVariant PvUseDisable="true">
+						<Variant>
+							<Name>ProductionMachine</Name>
+							<Disable>false</Disable>
+						</Variant>
+						<Variant>
+							<Name>UnitTest</Name>
+							<Disable>true</Disable>
+						</Variant>
+					</ProjectVariant>
+				</Task>
+				<Task Id="4" Priority="1" CycleTime="100000" AmsPort="351" AdtTasks="true">
+					<Name>UnitTestTask</Name>
+					<ProjectVariant PvUseDisable="true">
+						<Variant>
+							<Name>ProductionMachine</Name>
+							<Disable>true</Disable>
+						</Variant>
+						<Variant>
+							<Name>UnitTest</Name>
+							<Disable>false</Disable>
+						</Variant>
+					</ProjectVariant>
+				</Task>
+			</Tasks>
+			<ProjectVariant PvUseLink="true">
+				<Variant>
+					<Name>ProductionMachine</Name>
+					<TargetNetId></TargetNetId>
+				</Variant>
+				<Variant>
+					<Name>UnitTest</Name>
+					<TargetNetId>199.4.42.250.1.1</TargetNetId>
+				</Variant>
+			</ProjectVariant>
+		</System>
+		<Plc>
+			<Project File="mfx_bsm.xti"/>
+		</Plc>
+		<Variants SpecificLocalBootFolder="true">
+			<Variant>
+				<Name>ProductionMachine</Name>
+			</Variant>
+			<Variant>
+				<Name>UnitTest</Name>
+			</Variant>
+		</Variants>
+	</Project>
+</TcSmProject>

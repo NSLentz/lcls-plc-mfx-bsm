@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_SystemCalibration" Id="{48301cdf-562c-4c97-ba90-6ac51224f9e7}">
+    <Declaration><![CDATA[INTERFACE I_SystemCalibration
+]]></Declaration>
+    <Method Name="IsCalibrated" Id="{1b048ef3-40fe-4063-b477-6ec0325a4c86}">
+      <Declaration><![CDATA[
+METHOD IsCalibrated : BOOL
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

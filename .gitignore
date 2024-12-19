@@ -15,3 +15,5 @@ _CompileInfo
 .pytmc_build
 TrialLicense.tclrs
 UpgradeLog.htm
+*.vs
+*.vsm

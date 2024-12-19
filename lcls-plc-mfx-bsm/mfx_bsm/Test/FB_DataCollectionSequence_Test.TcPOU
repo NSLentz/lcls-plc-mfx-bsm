@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_DataCollectionSequence_Test" Id="{ac62226e-fce3-4951-ba37-0043fdbb4f06}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_DataCollectionSequence_Test EXTENDS FB_TestSuite
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+GivenThatSystemIsNotCalibratedDontAllowToStartSequence();
+]]></ST>
+    </Implementation>
+    <Method Name="GivenThatSystemIsNotCalibratedDontAllowToStartSequence" Id="{50d7a577-1f67-4c0c-acd7-565fdd628fc8}">
+      <Declaration><![CDATA[
+METHOD PRIVATE GivenThatSystemIsNotCalibratedDontAllowToStartSequence
+VAR
+    fbSystemCalibrationTestDouble : FB_SystemCalibrationTestDouble;
+    fbDataCollectionSequence : FB_DataCollectionSequence(iSystemCalibration := fbSystemCalibrationTestDouble);
+
+    bErrorReturn : BOOL;
+    sErrorStringReturn : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+TEST(__POUNAME());
+
+fbSystemCalibrationTestDouble.SetIsCalibrated(bIsCalibrated := FALSE);
+
+fbDataCollectionSequence.Start(bError => bErrorReturn,
+                               sErrorString => sErrorStringReturn);
+
+AssertTrue(Condition := bErrorReturn,
+           Message := 'Expected error');
+
+AssertTrue(Condition := sErrorStringReturn <> '',
+           Message := 'Expected non-empty string');
+
+TEST_FINISHED();
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

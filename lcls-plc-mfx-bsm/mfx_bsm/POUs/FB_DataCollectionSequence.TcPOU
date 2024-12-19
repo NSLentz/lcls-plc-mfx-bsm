@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_DataCollectionSequence" Id="{ff4ff02d-226f-42e4-a962-43e0863e01e2}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_DataCollectionSequence
+VAR
+    iSystemCalibration : I_SystemCalibration;
+
+    eSequence : (Waiting, DoingAthing, Error);
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{5079c59b-cf55-4794-bb0d-8c64eb0b5696}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+    iSystemCalibration : I_SystemCalibration;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.iSystemCalibration := iSystemCalibration;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Start" Id="{f16f3bf4-22ce-4e24-96ce-7b48c13031de}">
+      <Declaration><![CDATA[METHOD PUBLIC Start
+VAR_OUTPUT
+    bError : BOOL;
+    sErrorString : T_MaxString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT iSystemCalibration.IsCalibrated() THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t start data collection sequence. System is not calibrated';
+    RETURN;
+END_IF
+
+// Start the sequence
+eSequence := DoingAthing;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

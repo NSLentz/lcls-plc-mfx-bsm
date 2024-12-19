@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SystemCalibration" Id="{3a739886-f3a8-4964-8188-00c3726db96b}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_SystemCalibration IMPLEMENTS I_SystemCalibration
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="IsCalibrated" Id="{d28c1801-924c-4fd0-a352-92499ef39cc1}">
+      <Declaration><![CDATA[
+{warning 'Add method implementation '}
+METHOD IsCalibrated : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SystemCalibrationTestDouble" Id="{c489bb26-745f-45fc-b640-3153c052ad06}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_SystemCalibrationTestDouble IMPLEMENTS I_SystemCalibration
+VAR
+    bIsCalibrated : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="IsCalibrated" Id="{d983f7d3-9c09-47aa-a8e0-cd048dd8a7cc}">
+      <Declaration><![CDATA[
+METHOD IsCalibrated : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsCalibrated := THIS^.bIsCalibrated;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetIsCalibrated" Id="{8e69450e-2e7b-408c-bfd8-ad3d41c2a492}">
+      <Declaration><![CDATA[METHOD SetIsCalibrated : BOOL
+VAR_INPUT
+    bIsCalibrated : BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.bIsCalibrated := bIsCalibrated;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

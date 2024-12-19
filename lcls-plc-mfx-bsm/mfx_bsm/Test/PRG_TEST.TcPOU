@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_TEST" Id="{d103c899-b7b4-4722-91e3-7518e0de7d91}" SpecialFunc="None">
+    <Declaration><![CDATA[
+PROGRAM PRG_TEST
+VAR
+    fbDataCollectionSequence_Test : FB_DataCollectionSequence_Test;
+    fbSystemCalibration_Test : FB_SystemCalibration_Test;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+TcUnit.RUN();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
