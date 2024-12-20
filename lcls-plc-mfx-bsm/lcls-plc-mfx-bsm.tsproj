@@ -47,7 +47,7 @@
 			<ProjectVariant PvUseLink="true">
 				<Variant>
 					<Name>ProductionMachine</Name>
-					<TargetNetId></TargetNetId>
+					<TargetNetId/>
 				</Variant>
 				<Variant>
 					<Name>UnitTest</Name>

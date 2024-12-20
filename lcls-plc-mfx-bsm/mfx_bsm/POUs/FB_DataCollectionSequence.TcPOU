@@ -10,7 +10,9 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[
+// Run our sequence here
+]]></ST>
     </Implementation>
     <Method Name="FB_Init" Id="{5079c59b-cf55-4794-bb0d-8c64eb0b5696}">
       <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
@@ -28,20 +30,30 @@ END_VAR]]></Declaration>
       </Implementation>
     </Method>
     <Method Name="Start" Id="{f16f3bf4-22ce-4e24-96ce-7b48c13031de}">
-      <Declaration><![CDATA[METHOD PUBLIC Start
+      <Declaration><![CDATA[
+METHOD PUBLIC Start
 VAR_OUTPUT
     bError : BOOL;
     sErrorString : T_MaxString;
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT iSystemCalibration.IsCalibrated() THEN
+        <ST><![CDATA[
+IF NOT iSystemCalibration.IsCalibrated() THEN
     bError := TRUE;
     sErrorString := 'Can$'t start data collection sequence. System is not calibrated';
     RETURN;
 END_IF
 
+IF eSequence <> Waiting AND eSequence <> Error THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t start data collection sequence. System is already running data collection sequence';
+    RETURN;
+END_IF
+
 // Start the sequence
-eSequence := DoingAthing;]]></ST>
+eSequence := DoingAthing;
+]]></ST>
       </Implementation>
     </Method>
   </POU>

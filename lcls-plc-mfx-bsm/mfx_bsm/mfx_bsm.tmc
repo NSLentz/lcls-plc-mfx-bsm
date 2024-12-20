@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance2" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass" Hash="{815B52FB-CC42-1DA1-4A55-90A16A80148C}" GeneratedBy="TwinCAT XAE Plc">
+<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance2" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass" Hash="{610A72D8-523A-FE15-416D-BB3565F605A9}" GeneratedBy="TwinCAT XAE Plc">
   <DataTypes>
     <DataType>
       <Name Namespace="Tc2_Standard">TOF</Name>
@@ -1707,7 +1707,7 @@
         <BitOffs>629908288</BitOffs>
       </SubItem>
       <SubItem>
-        <Name>FB_TcUnitRunner_227__RunTestSuiteTestsInSequence_240__CurrentlyRunningTestSuite</Name>
+        <Name>FB_TcUnitRunner_228__RunTestSuiteTestsInSequence_241__CurrentlyRunningTestSuite</Name>
         <Type>UINT</Type>
         <Comment> This variable holds which current test suite is being called, as we are running
        each one in a sequence (one by one) </Comment>
@@ -1723,7 +1723,7 @@
         </Properties>
       </SubItem>
       <SubItem>
-        <Name>FB_TcUnitRunner_227__RunTestSuiteTestsInSequence_240__TimerBetweenExecutionOfTestSuites</Name>
+        <Name>FB_TcUnitRunner_228__RunTestSuiteTestsInSequence_241__TimerBetweenExecutionOfTestSuites</Name>
         <Type Namespace="Tc2_Standard">TOF</Type>
         <BitSize>256</BitSize>
         <BitOffs>629908416</BitOffs>
@@ -1770,7 +1770,7 @@
           <Properties>
             <Property>
               <Name>uselocation</Name>
-              <Value>FB_TCUNITRUNNER_227__RUNTESTSUITETESTSINSEQUENCE_240__CURRENTLYRUNNINGTESTSUITE</Value>
+              <Value>FB_TCUNITRUNNER_228__RUNTESTSUITETESTSINSEQUENCE_241__CURRENTLYRUNNINGTESTSUITE</Value>
             </Property>
           </Properties>
         </Local>
@@ -1781,7 +1781,7 @@
           <Properties>
             <Property>
               <Name>uselocation</Name>
-              <Value>FB_TCUNITRUNNER_227__RUNTESTSUITETESTSINSEQUENCE_240__TIMERBETWEENEXECUTIONOFTESTSUITES</Value>
+              <Value>FB_TCUNITRUNNER_228__RUNTESTSUITETESTSINSEQUENCE_241__TIMERBETWEENEXECUTIONOFTESTSUITES</Value>
             </Property>
           </Properties>
         </Local>
@@ -3399,7 +3399,7 @@
         <BitOffs>24640416</BitOffs>
       </SubItem>
       <SubItem>
-        <Name>FB_AssertResultStatic_509__AddAssertResult_519__AssertResultOverflow</Name>
+        <Name>FB_AssertResultStatic_510__AddAssertResult_520__AssertResultOverflow</Name>
         <Type>BOOL</Type>
         <BitSize>8</BitSize>
         <BitOffs>24640424</BitOffs>
@@ -3763,7 +3763,7 @@
           <Properties>
             <Property>
               <Name>uselocation</Name>
-              <Value>FB_ASSERTRESULTSTATIC_509__ADDASSERTRESULT_519__ASSERTRESULTOVERFLOW</Value>
+              <Value>FB_ASSERTRESULTSTATIC_510__ADDASSERTRESULT_520__ASSERTRESULTOVERFLOW</Value>
             </Property>
           </Properties>
         </Local>
@@ -3917,7 +3917,7 @@
         <BitOffs>8480416</BitOffs>
       </SubItem>
       <SubItem>
-        <Name>FB_AssertArrayResultStatic_537__AddAssertArrayResult_547__AssertResultOverflow</Name>
+        <Name>FB_AssertArrayResultStatic_538__AddAssertArrayResult_548__AssertResultOverflow</Name>
         <Type>BOOL</Type>
         <BitSize>8</BitSize>
         <BitOffs>8480424</BitOffs>
@@ -4234,7 +4234,7 @@
           <Properties>
             <Property>
               <Name>uselocation</Name>
-              <Value>FB_ASSERTARRAYRESULTSTATIC_537__ADDASSERTARRAYRESULT_547__ASSERTRESULTOVERFLOW</Value>
+              <Value>FB_ASSERTARRAYRESULTSTATIC_538__ADDASSERTARRAYRESULT_548__ASSERTRESULTOVERFLOW</Value>
             </Property>
           </Properties>
         </Local>
@@ -9840,34 +9840,493 @@
       </Method>
     </DataType>
     <DataType>
-      <Name>FB_SystemCalibrationTestDouble</Name>
-      <BitSize>192</BitSize>
-      <Implements>I_SystemCalibration</Implements>
-      <SubItem>
-        <Name>bIsCalibrated</Name>
-        <Type>BOOL</Type>
-        <BitSize>8</BitSize>
-        <BitOffs>128</BitOffs>
-      </SubItem>
+      <Name Namespace="lcls_twincat_math">I_Vec3</Name>
+      <BitSize>64</BitSize>
+      <ExtendsType GUID="{18071995-0000-0000-0000-000000000018}">PVOID</ExtendsType>
       <Method>
-        <Name>IsCalibrated</Name>
-        <ReturnType>BOOL</ReturnType>
-        <ReturnBitSize>8</ReturnBitSize>
+        <Name>__getx</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
       </Method>
       <Method>
-        <Name>SetIsCalibrated</Name>
+        <Name>__gety</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>__getz</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+    </DataType>
+    <DataType>
+      <Name Namespace="lcls_twincat_math">I_Quat</Name>
+      <BitSize>64</BitSize>
+      <ExtendsType Namespace="lcls_twincat_math">I_Vec3</ExtendsType>
+      <Method>
+        <Name>__getw</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+    </DataType>
+    <DataType>
+      <Name Namespace="lcls_twincat_math">FB_Vec3</Name>
+      <BitSize>384</BitSize>
+      <Implements Namespace="lcls_twincat_math">I_Vec3</Implements>
+      <Implements Namespace="lcls_twincat_math">I_Quat</Implements>
+      <SubItem>
+        <Name>fx</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>192</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fy</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>256</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fz</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>320</BitOffs>
+      </SubItem>
+      <Method>
+        <Name>DivScalar</Name>
+        <Parameter>
+          <Name>fScalar</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>bError</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>sErrorMsg</Name>
+          <Type Namespace="Tc2_System">T_MaxString</Type>
+          <BitSize>2048</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>GetNormSq</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+      </Method>
+      <Method>
+        <Name>__getw</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Local>
+          <Name>w</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>__getx</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Local>
+          <Name>x</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>__gety</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Local>
+          <Name>y</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>__getz</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Local>
+          <Name>z</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>Set</Name>
+        <Parameter>
+          <Name>x</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>y</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>z</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>GetNorm</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+      </Method>
+      <Method>
+        <Name>CrossVec3</Name>
+        <Parameter>
+          <Name>iVec3</Name>
+          <Type Namespace="lcls_twincat_math">I_Vec3</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Local>
+          <Name>fxi</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fyi</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fzi</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+      </Method>
+      <Method>
+        <Name>ToString</Name>
+        <ReturnType Namespace="Tc2_System">T_MaxString</ReturnType>
+        <ReturnBitSize>2048</ReturnBitSize>
+      </Method>
+      <Method>
+        <Name>AddVec3</Name>
+        <Parameter>
+          <Name>iVec3</Name>
+          <Type Namespace="lcls_twincat_math">I_Vec3</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>Normalize</Name>
+        <Parameter>
+          <Name>bError</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>sErrorMsg</Name>
+          <Type Namespace="Tc2_System">T_MaxString</Type>
+          <BitSize>2048</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Local>
+          <Name>fNorm</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+      </Method>
+      <Method>
+        <Name>DotVec3</Name>
+        <ReturnType>LREAL</ReturnType>
+        <ReturnBitSize>64</ReturnBitSize>
+        <Parameter>
+          <Name>iVec3</Name>
+          <Type Namespace="lcls_twincat_math">I_Vec3</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>__setx</Name>
+        <Parameter>
+          <Name>x</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>__sety</Name>
+        <Parameter>
+          <Name>y</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>__setz</Name>
+        <Parameter>
+          <Name>z</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Properties>
+          <Property>
+            <Name>property</Name>
+          </Property>
+        </Properties>
+      </Method>
+      <Method>
+        <Name>EqualsVec3</Name>
         <ReturnType>BOOL</ReturnType>
         <ReturnBitSize>8</ReturnBitSize>
         <Parameter>
-          <Name>bIsCalibrated</Name>
-          <Type>BOOL</Type>
-          <BitSize>8</BitSize>
+          <Name>iVec3</Name>
+          <Type Namespace="lcls_twincat_math">I_Vec3</Type>
+          <BitSize>64</BitSize>
         </Parameter>
       </Method>
       <Properties>
         <Property>
           <Name>PouType</Name>
           <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>FB_SystemCalibration</Name>
+      <BitSize>1920</BitSize>
+      <Implements>I_SystemCalibration</Implements>
+      <SubItem>
+        <Name>fbUpperRight</Name>
+        <Type Namespace="lcls_twincat_math">FB_Vec3</Type>
+        <Comment> [um]</Comment>
+        <BitSize>384</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>bUpperRightCalibrated</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>512</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fbUpperLeft</Name>
+        <Type Namespace="lcls_twincat_math">FB_Vec3</Type>
+        <Comment> [um]</Comment>
+        <BitSize>384</BitSize>
+        <BitOffs>576</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>bUpperLeftCalibrated</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>960</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fbLowerRight</Name>
+        <Type Namespace="lcls_twincat_math">FB_Vec3</Type>
+        <Comment> [um]</Comment>
+        <BitSize>384</BitSize>
+        <BitOffs>1024</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>bLowerRightCalibrated</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1408</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>fbLowerLeft</Name>
+        <Type Namespace="lcls_twincat_math">FB_Vec3</Type>
+        <Comment> [um]</Comment>
+        <BitSize>384</BitSize>
+        <BitOffs>1472</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>bLowerLeftCalibrated</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>1856</BitOffs>
+      </SubItem>
+      <Method>
+        <Name>SetLowerRight</Name>
+        <Parameter>
+          <Name>z</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>x</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>y</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>SetUpperLeft</Name>
+        <Parameter>
+          <Name>z</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>x</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>y</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>ClearUpperLeft</Name>
+      </Method>
+      <Method>
+        <Name>ClearLowerLeft</Name>
+      </Method>
+      <Method>
+        <Name>SetUpperRight</Name>
+        <Parameter>
+          <Name>z</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>x</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>y</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>ClearLowerRight</Name>
+      </Method>
+      <Method>
+        <Name>ClearUpperRight</Name>
+      </Method>
+      <Method>
+        <Name>SetLowerLeft</Name>
+        <Parameter>
+          <Name>x</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>y</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>z</Name>
+          <Comment> [um]</Comment>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>IsCalibrated</Name>
+        <ReturnType>BOOL</ReturnType>
+        <ReturnBitSize>8</ReturnBitSize>
+      </Method>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+        <Property>
+          <Name>no_explicit_call</Name>
+          <Value>Do not call this POU directly</Value>
         </Property>
       </Properties>
     </DataType>
@@ -9952,6 +10411,38 @@
       </Properties>
     </DataType>
     <DataType>
+      <Name>FB_SystemCalibrationTestDouble</Name>
+      <BitSize>192</BitSize>
+      <Implements>I_SystemCalibration</Implements>
+      <SubItem>
+        <Name>bIsCalibrated</Name>
+        <Type>BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <Method>
+        <Name>IsCalibrated</Name>
+        <ReturnType>BOOL</ReturnType>
+        <ReturnBitSize>8</ReturnBitSize>
+      </Method>
+      <Method>
+        <Name>SetIsCalibrated</Name>
+        <ReturnType>BOOL</ReturnType>
+        <ReturnBitSize>8</ReturnBitSize>
+        <Parameter>
+          <Name>bIsCalibrated</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+        </Parameter>
+      </Method>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
       <Name>FB_DataCollectionSequence_Test</Name>
       <BitSize>33574912</BitSize>
       <ExtendsType Namespace="TcUnit">FB_TestSuite</ExtendsType>
@@ -9976,6 +10467,345 @@
           <Name>sErrorStringReturn</Name>
           <Type Namespace="Tc2_System">T_MaxString</Type>
           <BitSize>2048</BitSize>
+        </Local>
+      </Method>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>FB_SystemCalibration_Test</Name>
+      <BitSize>33574912</BitSize>
+      <ExtendsType Namespace="TcUnit">FB_TestSuite</ExtendsType>
+      <Method>
+        <Name>GivenThatAllFourCornersHaveBeenSetExpectTheSystemToBeCalibrated</Name>
+        <Local>
+          <Name>fbSystemCalibration</Name>
+          <Type>FB_SystemCalibration</Type>
+          <BitSize>1920</BitSize>
+        </Local>
+      </Method>
+      <Method>
+        <Name>GivenThatAllThreeCornersHaveBeenSetExpectTheSystemNotToBeCalibrated</Name>
+        <Local>
+          <Name>fbSystemCalibration</Name>
+          <Type>FB_SystemCalibration</Type>
+          <BitSize>1920</BitSize>
+        </Local>
+      </Method>
+      <Method>
+        <Name>GivenThatSystemIsCalibratedAndClearOneIsSetExpectTheSystemNotToBeCalibrated</Name>
+        <Local>
+          <Name>fbSystemCalibration</Name>
+          <Type>FB_SystemCalibration</Type>
+          <BitSize>1920</BitSize>
+        </Local>
+      </Method>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>FB_GridScanPoints</Name>
+      <BitSize>64</BitSize>
+      <Method>
+        <Name>Save</Name>
+        <Parameter>
+          <Name>nWindow</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>fRotationStartAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>fRotationStopAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>fOscillationVelocity</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>fOscillationRange</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>nNumberOfRows</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Parameter>
+        <Parameter>
+          <Name>bError</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>sErrorString</Name>
+          <Type Namespace="Tc2_System">T_MaxString</Type>
+          <BitSize>2048</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+      </Method>
+      <Properties>
+        <Property>
+          <Name>PouType</Name>
+          <Value>FunctionBlock</Value>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>FB_GridScanPoints_Test</Name>
+      <BitSize>33574912</BitSize>
+      <ExtendsType Namespace="TcUnit">FB_TestSuite</ExtendsType>
+      <Method>
+        <Name>AllPrerequisitesFulfilledAcceptSave</Name>
+        <Local>
+          <Name>fbSystemCalibrationTestDouble</Name>
+          <Type>FB_SystemCalibrationTestDouble</Type>
+          <BitSize>192</BitSize>
+        </Local>
+        <Local>
+          <Name>fbGridScanPoints</Name>
+          <Type>FB_GridScanPoints</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>bErrorReturn</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+        </Local>
+        <Local>
+          <Name>sErrorStringReturn</Name>
+          <Type Namespace="Tc2_System">T_MaxString</Type>
+          <BitSize>2048</BitSize>
+        </Local>
+        <Local>
+          <Name>nWindow</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Local>
+        <Local>
+          <Name>fRotationStartAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fRotationStopAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fOscillationVelocity</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fOscillationRange</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>nNumberOfRows</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Local>
+      </Method>
+      <Method>
+        <Name>GetNominalValues</Name>
+        <Parameter>
+          <Name>nWindow</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>fRotationStartAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>fRotationStopAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>fOscillationVelocity</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>fOscillationRange</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+        <Parameter>
+          <Name>nNumberOfRows</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+          <Properties>
+            <Property>
+              <Name>ItemType</Name>
+              <Value>Output</Value>
+            </Property>
+          </Properties>
+        </Parameter>
+      </Method>
+      <Method>
+        <Name>GivenThatStartAngleIsNotWithinRangeDontAcceptSave</Name>
+        <Local>
+          <Name>fbSystemCalibrationTestDouble</Name>
+          <Type>FB_SystemCalibrationTestDouble</Type>
+          <BitSize>192</BitSize>
+        </Local>
+        <Local>
+          <Name>fbGridScanPoints</Name>
+          <Type>FB_GridScanPoints</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>bErrorReturn</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+        </Local>
+        <Local>
+          <Name>sErrorStringReturn</Name>
+          <Type Namespace="Tc2_System">T_MaxString</Type>
+          <BitSize>2048</BitSize>
+        </Local>
+        <Local>
+          <Name>nWindow</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Local>
+        <Local>
+          <Name>fRotationStartAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fRotationStopAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fOscillationVelocity</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fOscillationRange</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>nNumberOfRows</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Local>
+      </Method>
+      <Method>
+        <Name>GivenThatSystemIsNotCalibratedDontAcceptSave</Name>
+        <Local>
+          <Name>fbSystemCalibrationTestDouble</Name>
+          <Type>FB_SystemCalibrationTestDouble</Type>
+          <BitSize>192</BitSize>
+        </Local>
+        <Local>
+          <Name>fbGridScanPoints</Name>
+          <Type>FB_GridScanPoints</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>bErrorReturn</Name>
+          <Type>BOOL</Type>
+          <BitSize>8</BitSize>
+        </Local>
+        <Local>
+          <Name>sErrorStringReturn</Name>
+          <Type Namespace="Tc2_System">T_MaxString</Type>
+          <BitSize>2048</BitSize>
+        </Local>
+        <Local>
+          <Name>nWindow</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
+        </Local>
+        <Local>
+          <Name>fRotationStartAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fRotationStopAngle</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fOscillationVelocity</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>fOscillationRange</Name>
+          <Type>LREAL</Type>
+          <BitSize>64</BitSize>
+        </Local>
+        <Local>
+          <Name>nNumberOfRows</Name>
+          <Type>INT</Type>
+          <BitSize>16</BitSize>
         </Local>
       </Method>
       <Properties>
@@ -12630,10 +13460,44 @@
       </SubItem>
     </DataType>
     <DataType>
+      <Name Namespace="lcls_twincat_math">GVL_Constants</Name>
+      <SubItem>
+        <Name Static="true">PI</Name>
+        <Type>LREAL</Type>
+        <BitSize>64</BitSize>
+        <Default>
+          <Value>3.14159265358979</Value>
+        </Default>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name>MAIN</Name>
+      <SubItem>
+        <Name Static="true">fbSystemCalibration</Name>
+        <Type>FB_SystemCalibration</Type>
+        <BitSize>1920</BitSize>
+      </SubItem>
+      <SubItem>
+        <Name Static="true">fbDataCollectionSequence</Name>
+        <Type>FB_DataCollectionSequence</Type>
+        <BitSize>192</BitSize>
+      </SubItem>
+    </DataType>
+    <DataType>
       <Name>PRG_TEST</Name>
       <SubItem>
         <Name Static="true">fbDataCollectionSequence_Test</Name>
         <Type>FB_DataCollectionSequence_Test</Type>
+        <BitSize>33574912</BitSize>
+      </SubItem>
+      <SubItem>
+        <Name Static="true">fbSystemCalibration_Test</Name>
+        <Type>FB_SystemCalibration_Test</Type>
+        <BitSize>33574912</BitSize>
+      </SubItem>
+      <SubItem>
+        <Name Static="true">fbGridScanPoints_Test</Name>
+        <Type>FB_GridScanPoints_Test</Type>
         <BitSize>33574912</BitSize>
       </SubItem>
     </DataType>
@@ -12666,6 +13530,30 @@
       <Properties>
         <Property>
           <Name>linkalways</Name>
+        </Property>
+      </Properties>
+    </DataType>
+    <DataType>
+      <Name>Constants</Name>
+      <SubItem>
+        <Name Static="true">nGRID_SCAN_POINT_WINDOW_MIN</Name>
+        <Type>INT</Type>
+        <BitSize>16</BitSize>
+        <Default>
+          <Value>0</Value>
+        </Default>
+      </SubItem>
+      <SubItem>
+        <Name Static="true">nGRID_SCAN_POINT_WINDOW_MAX</Name>
+        <Type>INT</Type>
+        <BitSize>16</BitSize>
+        <Default>
+          <Value>10</Value>
+        </Default>
+      </SubItem>
+      <Properties>
+        <Property>
+          <Name>qualified_only</Name>
         </Property>
       </Properties>
     </DataType>
@@ -12709,7 +13597,7 @@
           <AreaNo AreaType="Internal" CreateSymbols="true">3</AreaNo>
           <Name>UnitTestTask Internal</Name>
           <ContextId>0</ContextId>
-          <ByteSize>96665600</ByteSize>
+          <ByteSize>106758144</ByteSize>
           <Symbol>
             <Name>Global_Variables.ADSLOG_MSGTYPE_ERROR</Name>
             <Comment> Error icon </Comment>
@@ -12980,7 +13868,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641649664</BitOffs>
+            <BitOffs>708814912</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList._TaskInfo</Name>
@@ -12998,7 +13886,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641651712</BitOffs>
+            <BitOffs>708816960</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList._TaskPouOid_UnitTestTask</Name>
@@ -13012,7 +13900,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641653760</BitOffs>
+            <BitOffs>708819008</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList._TaskOid_UnitTestTask</Name>
@@ -13026,7 +13914,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641653792</BitOffs>
+            <BitOffs>708819040</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList.__UnitTestTask</Name>
@@ -13047,14 +13935,14 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641653888</BitOffs>
+            <BitOffs>708819136</BitOffs>
           </Symbol>
         </DataArea>
         <DataArea>
           <AreaNo AreaType="Internal" CreateSymbols="true">19</AreaNo>
           <Name>PlcTask Internal</Name>
           <ContextId>1</ContextId>
-          <ByteSize>96665600</ByteSize>
+          <ByteSize>106758144</ByteSize>
           <Symbol>
             <Name>Global_Version.stLibVersion_Tc2_Standard</Name>
             <BitSize>288</BitSize>
@@ -17064,6 +17952,44 @@
             <BitOffs>641601128</BitOffs>
           </Symbol>
           <Symbol>
+            <Name>GVL_Constants.PI</Name>
+            <BitSize>64</BitSize>
+            <BaseType>LREAL</BaseType>
+            <Default>
+              <Value>3.14159265358979</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>641601472</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>MAIN.fbSystemCalibration</Name>
+            <BitSize>1920</BitSize>
+            <BaseType>FB_SystemCalibration</BaseType>
+            <BitOffs>641652096</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>MAIN.fbDataCollectionSequence</Name>
+            <BitSize>192</BitSize>
+            <BaseType>FB_DataCollectionSequence</BaseType>
+            <BitOffs>641654016</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>PRG_TEST.fbDataCollectionSequence_Test</Name>
+            <BitSize>33574912</BitSize>
+            <BaseType>FB_DataCollectionSequence_Test</BaseType>
+            <BitOffs>641664256</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>PRG_TEST.fbSystemCalibration_Test</Name>
+            <BitSize>33574912</BitSize>
+            <BaseType>FB_SystemCalibration_Test</BaseType>
+            <BitOffs>675239168</BitOffs>
+          </Symbol>
+          <Symbol>
             <Name>TwinCAT_PreventOnlineChangeGvl.PlcProfilerConfigChecksum</Name>
             <BitSize>520</BitSize>
             <BaseType>STRING(64)</BaseType>
@@ -17075,7 +18001,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641648832</BitOffs>
+            <BitOffs>708814080</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList._TaskPouOid_PlcTask</Name>
@@ -17089,7 +18015,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641653824</BitOffs>
+            <BitOffs>708819072</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList._TaskOid_PlcTask</Name>
@@ -17103,7 +18029,7 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641653856</BitOffs>
+            <BitOffs>708819104</BitOffs>
           </Symbol>
           <Symbol>
             <Name>TwinCAT_SystemInfoVarList.__PlcTask</Name>
@@ -17124,13 +18050,41 @@
                 <Name>TcVarGlobal</Name>
               </Property>
             </Properties>
-            <BitOffs>641654784</BitOffs>
+            <BitOffs>708820032</BitOffs>
           </Symbol>
           <Symbol>
-            <Name>PRG_TEST.fbDataCollectionSequence_Test</Name>
+            <Name>Constants.nGRID_SCAN_POINT_WINDOW_MIN</Name>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Default>
+              <Value>0</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>708847328</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>Constants.nGRID_SCAN_POINT_WINDOW_MAX</Name>
+            <BitSize>16</BitSize>
+            <BaseType>INT</BaseType>
+            <Default>
+              <Value>10</Value>
+            </Default>
+            <Properties>
+              <Property>
+                <Name>TcVarGlobal</Name>
+              </Property>
+            </Properties>
+            <BitOffs>708847344</BitOffs>
+          </Symbol>
+          <Symbol>
+            <Name>PRG_TEST.fbGridScanPoints_Test</Name>
             <BitSize>33574912</BitSize>
-            <BaseType>FB_DataCollectionSequence_Test</BaseType>
-            <BitOffs>641795136</BitOffs>
+            <BaseType>FB_GridScanPoints_Test</BaseType>
+            <BitOffs>708991552</BitOffs>
           </Symbol>
         </DataArea>
       </DataAreas>
@@ -17143,15 +18097,15 @@
         </Property>
         <Property>
           <Name>ChangeDate</Name>
-          <Value>2024-12-12T08:59:09</Value>
+          <Value>2024-12-19T08:39:27</Value>
         </Property>
         <Property>
           <Name>GeneratedCodeSize</Name>
-          <Value>299008</Value>
+          <Value>319488</Value>
         </Property>
         <Property>
           <Name>GlobalDataSize</Name>
-          <Value>84037632</Value>
+          <Value>92434432</Value>
         </Property>
         <Property>
           <Name>UTF8EncodedStrings</Name>

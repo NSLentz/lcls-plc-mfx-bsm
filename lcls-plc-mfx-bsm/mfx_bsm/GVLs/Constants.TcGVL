@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <GVL Name="Constants" Id="{68d21a5d-b6f1-458e-a6b3-1dca277ea9c6}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL CONSTANT
+    nGRID_SCAN_POINT_WINDOW_MIN : INT := 0;
+    nGRID_SCAN_POINT_WINDOW_MAX : INT := 10;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

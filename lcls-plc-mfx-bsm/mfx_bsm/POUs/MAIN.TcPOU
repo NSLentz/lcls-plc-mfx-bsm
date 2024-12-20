@@ -1,13 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="MAIN" Id="{7b6ce721-0982-4363-925f-4dbc20de9fef}">
-    <Declaration><![CDATA[PROGRAM MAIN
+  <POU Name="MAIN" Id="{7b6ce721-0982-4363-925f-4dbc20de9fef}" SpecialFunc="None">
+    <Declaration><![CDATA[
+PROGRAM MAIN
 VAR
+    fbSystemCalibration : FB_SystemCalibration;
+    fbDataCollectionSequence : FB_DataCollectionSequence(iSystemCalibration := fbSystemCalibration);
+
+    //fbGridScanPoints : FB_GridScanPoints(iSystemCalibration := fbSystemCalibration,
+    //                                     nWindowMin := Constants.nGRID_SCAN_POINT_WINDOW_MIN,
+    //                                     nWindowMax := Constants.nGRID_SCAN_POINT_WINDOW_MAX);
 END_VAR
-]]>
-    </Declaration>
+]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[
+fbDataCollectionSequence();
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

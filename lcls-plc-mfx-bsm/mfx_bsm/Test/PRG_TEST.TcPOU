@@ -5,6 +5,7 @@
 PROGRAM PRG_TEST
 VAR
     fbDataCollectionSequence_Test : FB_DataCollectionSequence_Test;
+    fbGridScanPoints_Test : FB_GridScanPoints_Test;
     fbSystemCalibration_Test : FB_SystemCalibration_Test;
 END_VAR
 ]]></Declaration>

@@ -2,20 +2,235 @@
 <TcPlcObject Version="1.1.0.1">
   <POU Name="FB_SystemCalibration" Id="{3a739886-f3a8-4964-8188-00c3726db96b}" SpecialFunc="None">
     <Declaration><![CDATA[
+{attribute 'no_explicit_call' := 'Do not call this POU directly'}
 FUNCTION_BLOCK FB_SystemCalibration IMPLEMENTS I_SystemCalibration
 VAR
+    fbUpperRight : FB_Vec3; // [um]
+    bUpperRightCalibrated : BOOL;
+    fbUpperLeft : FB_Vec3; // [um]
+    bUpperLeftCalibrated : BOOL;
+    fbLowerRight : FB_Vec3; // [um]
+    bLowerRightCalibrated : BOOL;
+    fbLowerLeft : FB_Vec3; // [um]
+    bLowerLeftCalibrated : BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="IsCalibrated" Id="{d28c1801-924c-4fd0-a352-92499ef39cc1}">
+    <Method Name="ClearLowerLeft" Id="{96753aa1-2936-4646-bcea-a3212c8e458e}">
       <Declaration><![CDATA[
-{warning 'Add method implementation '}
-METHOD IsCalibrated : BOOL
+METHOD PUBLIC ClearLowerLeft
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+bLowerLeftCalibrated := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearLowerRight" Id="{e060dad6-9762-4b76-8148-ee21a1148ae9}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearLowerRight
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+bLowerRightCalibrated := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearUpperLeft" Id="{aedac66b-480e-4817-a8c9-e123623d2ebc}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearUpperLeft
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+bUpperLeftCalibrated := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearUpperRight" Id="{a9ab3d2a-2ee2-418a-8ee2-a4f31923709e}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearUpperRight
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+bUpperRightCalibrated := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{92d72ac3-0dd1-4f1c-9341-b37935866802}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+    iSystemCalibration : I_SystemCalibration;
+    nWindowMin : INT;
+    nWindowMax : INT;
+    fRotationStartAngleMin : LREAL; // [°]
+    fRotationStartAngleMax : LREAL; // [°]
+    fRotationStopAngleMin : LREAL; // [°]
+    fRotationStopAngleMax : LREAL; // [°]
+    fOscillationVelocityMin : LREAL; // [°/s]
+    fOscillationVelocityMax : LREAL; // [°/s]
+    fOscillationRangeMin : LREAL; // [°]
+    fOscillationRangeMax : LREAL; // [°]
+    nNumberOfRowsMin : INT;
+    nNumberOfRowsMax : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ THIS^.iSystemCalibration := iSystemCalibration;
+ THIS^.nWindowMin := nWindowMin;
+ THIS^.nWindowMax := nWindowMax;
+ THIS^.fRotationStartAngleMin := fRotationStartAngleMin;
+ THIS^.fRotationStartAngleMax := fRotationStartAngleMax;
+ THIS^.fRotationStopAngleMin := fRotationStopAngleMin;
+ THIS^.fRotationStopAngleMax := fRotationStopAngleMax;
+ THIS^.fOscillationVelocityMin := fOscillationVelocityMin;
+ THIS^.fOscillationVelocityMax := fOscillationVelocityMax;
+ THIS^.fOscillationRangeMin := fOscillationRangeMin;
+ THIS^.fOscillationRangeMax := fOscillationRangeMax;
+ THIS^.nNumberOfRowsMin := nNumberOfRowsMin;
+ THIS^.nNumberOfRowsMax := nNumberOfRowsMax;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GridIsValid" Id="{1fa4cd1f-f3eb-4a78-b343-dd744dfcd83c}">
+      <Declaration><![CDATA[METHOD PUBLIC GridIsValid : BOOL
+VAR_INPUT
+END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsCalibrated" Id="{d28c1801-924c-4fd0-a352-92499ef39cc1}">
+      <Declaration><![CDATA[
+METHOD IsCalibrated : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IsCalibrated := bUpperRightCalibrated AND
+                bUpperLeftCalibrated AND
+                bLowerRightCalibrated AND
+                bLowerLeftCalibrated;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Save" Id="{9f2f2e80-1615-4076-9f4e-c60ec7f8224e}">
+      <Declaration><![CDATA[
+METHOD PUBLIC Save
+VAR_INPUT
+    nWindow : INT;
+    fRotationStartAngle : LREAL;
+    fRotationStopAngle : LREAL;
+    fOscillationVelocity : LREAL;
+    fOscillationRange : LREAL;
+    nNumberOfRows : INT;
+END_VAR
+VAR_OUTPUT
+    bError : BOOL;
+    sErrorString : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF NOT iSystemCalibration.IsCalibrated() THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. System is not calibrated';
+    RETURN;
+END_IF
+
+IF nWindow < nWindowMin OR nWindow > nWindowMax THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. Window number is out of range';
+    RETURN;
+END_IF
+
+IF fRotationStartAngle < fRotationStartAngleMin OR fRotationStartAngle > fRotationStartAngleMax THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. Rotation start angle is out of range';
+    RETURN;
+END_IF
+
+// TODO FILL OUT THE REST OF THE CHECKS
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetLowerLeft" Id="{389f0429-6ea5-419c-8973-ddbab28b5abf}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetLowerLeft
+VAR_INPUT
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+    z : LREAL; // [um]
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbLowerLeft.x := x;
+fbLowerLeft.y := y;
+fbLowerLeft.z := z;
+bLowerLeftCalibrated := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetLowerRight" Id="{3bf1abd2-c29e-4cce-aec7-148f0bbdd63a}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetLowerRight
+VAR_INPUT
+    z : LREAL; // [um]
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbLowerRight.x := x;
+fbLowerRight.y := y;
+fbLowerRight.z := z;
+bLowerRightCalibrated := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetUpperLeft" Id="{d66ba9eb-ac32-430c-8e78-a4f90b630bc2}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetUpperLeft
+VAR_INPUT
+    z : LREAL; // [um]
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbUpperLeft.x := x;
+fbUpperLeft.y := y;
+fbUpperLeft.z := z;
+bUpperLeftCalibrated := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetUpperRight" Id="{f07de4da-3d2f-44ba-bf15-c28e391f732b}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetUpperRight
+VAR_INPUT
+    z : LREAL; // [um]
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+fbUpperRight.x := x;
+fbUpperRight.y := y;
+fbUpperRight.z := z;
+bUpperRightCalibrated := TRUE;
+]]></ST>
       </Implementation>
     </Method>
   </POU>
