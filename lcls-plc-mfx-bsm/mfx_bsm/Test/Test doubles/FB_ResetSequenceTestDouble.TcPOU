@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ResetSequenceTestDouble" Id="{58d809bf-6ec0-41bb-8ea6-69586d794719}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ResetSequenceTestDouble IMPLEMENTS I_ResetSequence
+VAR
+    bIsResetted : BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="IsReset" Id="{d24bf294-3201-40ef-be1e-9234974ae659}">
+      <Declaration><![CDATA[METHOD IsReset : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsReset := THIS^.bIsResetted;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetIsReset" Id="{02c6dcbb-7cb3-4c7b-9cc2-3e312fb966d9}">
+      <Declaration><![CDATA[METHOD PUBLIC SetIsReset
+VAR_INPUT
+    bIsReset : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.bIsResetted := bIsReset;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

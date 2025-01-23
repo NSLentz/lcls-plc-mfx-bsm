@@ -10,16 +10,16 @@ END_VAR
       <ST><![CDATA[
 GivenThatAllFourCornersHaveBeenSetExpectTheSystemToBeCalibrated();
 GivenThatAllThreeCornersHaveBeenSetExpectTheSystemNotToBeCalibrated();
+GivenThatStartAngleIsNotWithinRangeDontAcceptSave();
 GivenThatSystemIsCalibratedAndClearOneIsSetExpectTheSystemNotToBeCalibrated();
+GivenThatSystemIsNotCalibratedDontAcceptSave();
 ]]></ST>
     </Implementation>
     <Method Name="AllPrerequisitesFulfilledAcceptSave" Id="{c49330a4-fa44-47b5-9f8a-2b72ae87faa5}">
       <Declaration><![CDATA[
 METHOD PRIVATE AllPrerequisitesFulfilledAcceptSave
 VAR
-    fbSystemCalibrationTestDouble : FB_SystemCalibrationTestDouble;
-    fbGridScanPoints : FB_GridScanPoints(iSystemCalibration := fbSystemCalibrationTestDouble,
-                                         nWindowMin := 2,
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
                                          nWindowMax := 5,
                                          fRotationStartAngleMin := 0.0,
                                          fRotationStartAngleMax  := 90.0,
@@ -48,15 +48,15 @@ END_VAR
 TEST(__POUNAME());
 
 // Test setup
-fbSystemCalibrationTestDouble.SetIsCalibrated(bIsCalibrated := TRUE);
-GetNominalValues(nWindow => nWindow,
+GetNominalValues(fbSystemCalibration := fbSystemCalibration,
+                 nWindow => nWindow,
                  fRotationStartAngle => fRotationStartAngle,
                  fRotationStopAngle => fRotationStopAngle,
                  fOscillationVelocity => fOscillationVelocity,
                  fOscillationRange => fOscillationRange,
                  nNumberOfRows => nNumberOfRows);
 
-fbGridScanPoints.Save(nWindow := nWindow,
+fbSystemCalibration.Save(nWindow := nWindow,
                       fRotationStartAngle := fRotationStartAngle,
                       fRotationStopAngle := fRotationStopAngle,
                       fOscillationVelocity := fOscillationVelocity,
@@ -78,6 +78,9 @@ TEST_FINISHED();
     </Method>
     <Method Name="GetNominalValues" Id="{52cf28c2-0e85-48a6-9ba9-87a4542cd828}">
       <Declaration><![CDATA[METHOD PRIVATE GetNominalValues
+VAR_IN_OUT
+    fbSystemCalibration : FB_SystemCalibration;
+END_VAR
 VAR_OUTPUT
     nWindow : INT;
     fRotationStartAngle : LREAL;
@@ -88,19 +91,37 @@ VAR_OUTPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nWindow := 3;
+        <ST><![CDATA[
+nWindow := 3;
 fRotationStartAngle := 0.0;
 fRotationStopAngle := 90.0;
 fOscillationVelocity := 10.0;
 fOscillationRange := 20.0;
-nNumberOfRows := 6;]]></ST>
+nNumberOfRows := 6;
+
+fbSystemCalibration.SetLowerLeft(1, 1, 1);
+fbSystemCalibration.SetLowerRight(1, 1, 1);
+fbSystemCalibration.SetUpperLeft(1, 1, 1);
+fbSystemCalibration.SetUpperRight(1, 1, 1);
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="GivenThatAllFourCornersHaveBeenSetExpectTheSystemToBeCalibrated" Id="{50a537b6-8469-4896-8a4d-c9a0cb049a9a}">
       <Declaration><![CDATA[
 METHOD PRIVATE GivenThatAllFourCornersHaveBeenSetExpectTheSystemToBeCalibrated
 VAR
-    fbSystemCalibration : FB_SystemCalibration;
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
+                                         nWindowMax := 5,
+                                         fRotationStartAngleMin := 0.0,
+                                         fRotationStartAngleMax  := 90.0,
+                                         fRotationStopAngleMin := 0.0,
+                                         fRotationStopAngleMax := 90.0,
+                                         fOscillationVelocityMin := 10.0,
+                                         fOscillationVelocityMax := 45,
+                                         fOscillationRangeMin := 20.0,
+                                         fOscillationRangeMax := 30.0,
+                                         nNumberOfRowsMin := 1,
+                                         nNumberOfRowsMax := 6);
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -134,7 +155,18 @@ TEST_FINISHED();
       <Declaration><![CDATA[
 METHOD PRIVATE GivenThatAllThreeCornersHaveBeenSetExpectTheSystemNotToBeCalibrated
 VAR
-    fbSystemCalibration : FB_SystemCalibration;
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
+                                         nWindowMax := 5,
+                                         fRotationStartAngleMin := 0.0,
+                                         fRotationStartAngleMax  := 90.0,
+                                         fRotationStopAngleMin := 0.0,
+                                         fRotationStopAngleMax := 90.0,
+                                         fOscillationVelocityMin := 10.0,
+                                         fOscillationVelocityMax := 45,
+                                         fOscillationRangeMin := 20.0,
+                                         fOscillationRangeMax := 30.0,
+                                         nNumberOfRowsMin := 1,
+                                         nNumberOfRowsMax := 6);
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -164,9 +196,7 @@ TEST_FINISHED();
       <Declaration><![CDATA[
 METHOD PRIVATE GivenThatStartAngleIsNotWithinRangeDontAcceptSave
 VAR
-    fbSystemCalibrationTestDouble : FB_SystemCalibrationTestDouble;
-    fbGridScanPoints : FB_GridScanPoints(iSystemCalibration := fbSystemCalibrationTestDouble,
-                                         nWindowMin := 2,
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
                                          nWindowMax := 5,
                                          fRotationStartAngleMin := 0.0,
                                          fRotationStartAngleMax  := 90.0,
@@ -195,8 +225,8 @@ END_VAR
 TEST(__POUNAME());
 
 // Test setup
-fbSystemCalibrationTestDouble.SetIsCalibrated(bIsCalibrated := TRUE);
-GetNominalValues(nWindow => nWindow,
+GetNominalValues(fbSystemCalibration := fbSystemCalibration,
+                 nWindow => nWindow,
                  fRotationStartAngle => fRotationStartAngle,
                  fRotationStopAngle => fRotationStopAngle,
                  fOscillationVelocity => fOscillationVelocity,
@@ -205,7 +235,7 @@ GetNominalValues(nWindow => nWindow,
 
 fRotationStartAngle := 155.0;
 
-fbGridScanPoints.Save(nWindow := nWindow,
+fbSystemCalibration.Save(nWindow := nWindow,
                       fRotationStartAngle := fRotationStartAngle,
                       fRotationStopAngle := fRotationStopAngle,
                       fOscillationVelocity := fOscillationVelocity,
@@ -228,7 +258,18 @@ TEST_FINISHED();
       <Declaration><![CDATA[
 METHOD PRIVATE GivenThatSystemIsCalibratedAndClearOneIsSetExpectTheSystemNotToBeCalibrated
 VAR
-    fbSystemCalibration : FB_SystemCalibration;
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
+                                         nWindowMax := 5,
+                                         fRotationStartAngleMin := 0.0,
+                                         fRotationStartAngleMax  := 90.0,
+                                         fRotationStopAngleMin := 0.0,
+                                         fRotationStopAngleMax := 90.0,
+                                         fOscillationVelocityMin := 10.0,
+                                         fOscillationVelocityMax := 45,
+                                         fOscillationRangeMin := 20.0,
+                                         fOscillationRangeMax := 30.0,
+                                         nNumberOfRowsMin := 1,
+                                         nNumberOfRowsMax := 6);
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -264,9 +305,7 @@ TEST_FINISHED();
       <Declaration><![CDATA[
 METHOD PRIVATE GivenThatSystemIsNotCalibratedDontAcceptSave
 VAR
-    fbSystemCalibrationTestDouble : FB_SystemCalibrationTestDouble;
-    fbGridScanPoints : FB_GridScanPoints(iSystemCalibration := fbSystemCalibrationTestDouble,
-                                         nWindowMin := 2,
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
                                          nWindowMax := 5,
                                          fRotationStartAngleMin := 0.0,
                                          fRotationStartAngleMax  := 90.0,
@@ -295,15 +334,20 @@ END_VAR
 TEST(__POUNAME());
 
 // Test setup
-fbSystemCalibrationTestDouble.SetIsCalibrated(bIsCalibrated := FALSE);
-GetNominalValues(nWindow => nWindow,
+GetNominalValues(fbSystemCalibration := fbSystemCalibration,
+                 nWindow => nWindow,
                  fRotationStartAngle => fRotationStartAngle,
                  fRotationStopAngle => fRotationStopAngle,
                  fOscillationVelocity => fOscillationVelocity,
                  fOscillationRange => fOscillationRange,
                  nNumberOfRows => nNumberOfRows);
 
-fbGridScanPoints.Save(nWindow := nWindow,
+fbSystemCalibration.ClearLowerLeft();
+
+AssertFalse(Condition := fbSystemCalibration.IsCalibrated(),
+           Message := 'Expected system to not be calibrated in order to run valid test');
+
+fbSystemCalibration.Save(nWindow := nWindow,
                       fRotationStartAngle := fRotationStartAngle,
                       fRotationStopAngle := fRotationStopAngle,
                       fOscillationVelocity := fOscillationVelocity,

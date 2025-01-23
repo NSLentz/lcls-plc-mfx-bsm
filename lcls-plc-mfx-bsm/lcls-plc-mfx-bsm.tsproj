@@ -47,17 +47,20 @@
 			<ProjectVariant PvUseLink="true">
 				<Variant>
 					<Name>ProductionMachine</Name>
-					<TargetNetId/>
-				</Variant>
-				<Variant>
 					<Name>UnitTest</Name>
 					<TargetNetId>199.4.42.250.1.1</TargetNetId>
 				</Variant>
 			</ProjectVariant>
 		</System>
+		<Motion>
+			<NC File="NC.xti"/>
+		</Motion>
 		<Plc>
 			<Project File="mfx_bsm.xti"/>
 		</Plc>
+		<Io>
+			<Device File="E-Bus (EtherCAT).xti" Id="1"/>
+		</Io>
 		<Variants SpecificLocalBootFolder="true">
 			<Variant>
 				<Name>ProductionMachine</Name>

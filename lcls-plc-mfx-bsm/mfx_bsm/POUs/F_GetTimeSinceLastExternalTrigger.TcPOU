@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="F_GetTimeSinceLastExternalTrigger" Id="{dc0510a9-3904-4051-87f0-e9d882ae1b57}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION F_GetTimeSinceLastExternalTrigger : LREAL // [us]
+VAR_INPUT
+    LastExternalTriggerTimeLatch : ULINT; // [ns]
+END_VAR
+VAR
+    dcSysTime : ULINT; // [ns]
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+dcSysTime := F_GetCurDcTickTime64();
+
+IF dcSysTime > LastExternalTriggerTimeLatch THEN
+    F_GetTimeSinceLastExternalTrigger := ULINT_TO_LREAL(dcSysTime - LastExternalTriggerTimeLatch) / 1000.0;
+ELSE
+    F_GetTimeSinceLastExternalTrigger := -ULINT_TO_LREAL(LastExternalTriggerTimeLatch - dcSysTime) / 1000.0;
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

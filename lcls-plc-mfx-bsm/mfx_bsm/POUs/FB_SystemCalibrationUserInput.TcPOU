@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SystemCalibrationUserInput" Id="{72f485f3-74c1-47a2-b6e9-badc4a5d72aa}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_SystemCalibrationUserInput
+VAR
+    iSystemCalibration : I_SystemCalibration;
+
+    // Inputs from UI
+    {attribute 'pytmc' := '
+        pv: nWindow
+        io: io
+    '}
+    nWindow : INT;
+    {attribute 'pytmc' := '
+        pv: fRotationStartAngle
+        io: io
+    '}
+    fRotationStartAngle : LREAL;
+    {attribute 'pytmc' := '
+        pv: fRotationStopAngle
+        io: io
+    '}
+    fRotationStopAngle : LREAL;
+    {attribute 'pytmc' := '
+        pv: fOscillationVelocity
+        io: io
+    '}
+    fOscillationVelocity : LREAL;
+    {attribute 'pytmc' := '
+        pv: fOscillationRange
+        io: io
+    '}
+    fOscillationRange : LREAL;
+    {attribute 'pytmc' := '
+        pv: nNumberOfRows
+        io: io
+    '}
+    nNumberOfRows : INT;
+    {attribute 'pytmc' := '
+        pv: bSaveCommand
+        io: io
+    '}
+    bSaveCommand : BOOL;
+
+    {attribute 'pytmc' := '
+        pv: bSaveUpperRight
+        io: io
+    '}
+    bSaveUpperRight : BOOL;
+    {attribute 'pytmc' := '
+        pv: fUpperRightX
+        io: io
+    '}
+    fUpperRightX : LREAL;
+    {attribute 'pytmc' := '
+        pv: fUpperRightY
+        io: io
+    '}
+    fUpperRightY : LREAL;
+    {attribute 'pytmc' := '
+        pv: fUpperRightZ
+        io: io
+    '}
+    fUpperRightZ : LREAL;
+
+    {attribute 'pytmc' := '
+        pv: bSaveUpperLeft
+        io: io
+    '}
+    bSaveUpperLeft : BOOL;
+    {attribute 'pytmc' := '
+        pv: fUpperLeftX
+        io: io
+    '}
+    fUpperLeftX : LREAL;
+    {attribute 'pytmc' := '
+        pv: fUpperLeftY
+        io: io
+    '}
+    fUpperLeftY : LREAL;
+    {attribute 'pytmc' := '
+        pv: fUpperLeftZ
+        io: io
+    '}
+    fUpperLeftZ : LREAL;
+
+    {attribute 'pytmc' := '
+        pv: bSaveLowerRight
+        io: io
+    '}
+    bSaveLowerRight : BOOL;
+    {attribute 'pytmc' := '
+        pv: fLowerRightX
+        io: io
+    '}
+    fLowerRightX : LREAL;
+    {attribute 'pytmc' := '
+        pv: fLowerRightY
+        io: io
+    '}
+    fLowerRightY : LREAL;
+    {attribute 'pytmc' := '
+        pv: fLowerLeftZ
+        io: io
+    '}
+    fLowerRightZ : LREAL;
+
+    {attribute 'pytmc' := '
+        pv: bSaveLowerLeft
+        io: io
+    '}
+    bSaveLowerLeft : BOOL;
+    {attribute 'pytmc' := '
+        pv: fLowerLeftX
+        io: io
+    '}
+    fLowerLeftX : LREAL;
+    {attribute 'pytmc' := '
+        pv: fLowerLeftY
+        io: io
+    '}
+    fLowerLeftY : LREAL;
+    {attribute 'pytmc' := '
+        pv: fLowerLeftZ
+        io: io
+    '}
+    fLowerLeftZ : LREAL;
+
+    {attribute 'pytmc' := '
+        pv: bClearAll
+        io: io
+    '}
+    bClearAll : BOOL;
+    {attribute 'pytmc' := '
+        pv: bClearUpperRight
+        io: io
+    '}
+    bClearUpperRight : BOOL;
+    {attribute 'pytmc' := '
+        pv: bClearUpperLeft
+        io: io
+    '}
+    bClearUpperLeft : BOOL;
+    {attribute 'pytmc' := '
+        pv: bClearLowerRight
+        io: io
+    '}
+    bClearLowerRight : BOOL;
+    {attribute 'pytmc' := '
+        pv: bClearLowerLeft
+        io: io
+    '}
+    bClearLowerLeft : BOOL;
+
+    // Outputs to UI
+    {attribute 'pytmc' := '
+        pv: bError
+        io: i
+    '}
+    bError : BOOL;
+    {attribute 'pytmc' := '
+        pv: sErrorString
+        io: i
+    '}
+    sErrorString : T_MaxString;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF bSaveCommand THEN
+    bSaveCommand := FALSE;
+
+    iSystemCalibration.Save(nWindow := nWindow,
+                            fRotationStartAngle := fRotationStartAngle,
+                            fRotationStopAngle := fRotationStopAngle,
+                            fOscillationVelocity := fOscillationVelocity,
+                            fOscillationRange := fOscillationRange,
+                            nNumberOfRows := nNumberOfRows,
+                            bError => bError,
+                            sErrorString => sErrorString
+    );
+
+    IF bError THEN
+        GVL_Logger.fbRootLogger(sMsg := CONCAT('Error attempting system calibration save command: ', sErrorString),
+                                eSevr := TcEventSeverity.Error,
+                                eSubsystem := E_Subsystem.MOTION
+        );
+    END_IF
+END_IF
+
+IF bSaveUpperRight THEN
+    bSaveUpperRight := FALSE;
+
+    iSystemCalibration.SetUpperRight(x := fUpperRightX,
+                                     y := fUpperRightY,
+                                     z := fUpperRightZ
+    );
+END_IF
+
+IF bSaveUpperLeft THEN
+    bSaveUpperLeft := FALSE;
+
+    iSystemCalibration.SetUpperLeft(x := fUpperLeftX,
+                                    y := fUpperLeftY,
+                                    z := fUpperLeftZ
+    );
+END_IF
+
+IF bSaveLowerRight THEN
+    bSaveLowerRight := FALSE;
+
+    iSystemCalibration.SetLowerRight(x := fLowerRightX,
+                                     y := fLowerRightY,
+                                     z := fLowerRightZ
+    );
+END_IF
+
+IF bSaveLowerLeft THEN
+    bSaveLowerLeft := FALSE;
+
+    iSystemCalibration.SetLowerLeft(x := fLowerLeftX,
+                                    y := fLowerLeftY,
+                                    z := fLowerLeftZ
+    );
+END_IF
+
+IF bClearAll THEN
+    bClearAll := FALSE;
+
+    bClearUpperRight := TRUE;
+    bClearUpperLeft := TRUE;
+    bClearLowerRight := TRUE;
+    bClearLowerRight := TRUE;
+END_IF
+
+IF bClearUpperRight THEN
+    bClearUpperRight := FALSE;
+
+    iSystemCalibration.ClearUpperRight();
+END_IF
+
+IF bClearUpperLeft THEN
+    bClearUpperLeft := FALSE;
+
+    iSystemCalibration.ClearUpperLeft();
+END_IF
+
+IF bClearLowerRight THEN
+    bClearLowerRight := FALSE;
+
+    iSystemCalibration.ClearLowerRight();
+END_IF
+
+IF bClearLowerLeft THEN
+    bClearLowerLeft := FALSE;
+
+    iSystemCalibration.ClearLowerLeft();
+END_IF
+]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{9459db64-23d5-4e64-9cdf-c0bfb12385ab}">
+      <Declaration><![CDATA[
+//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+
+    iSystemCalibration : I_SystemCalibration;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+THIS^.iSystemCalibration := iSystemCalibration;
+ ]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

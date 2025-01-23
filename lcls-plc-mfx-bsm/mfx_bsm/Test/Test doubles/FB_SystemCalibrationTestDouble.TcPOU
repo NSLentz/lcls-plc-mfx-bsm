@@ -10,11 +10,63 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
+    <Method Name="ClearLowerLeft" Id="{3d7ce3b8-556b-4547-a138-619b46bfdff3}">
+      <Declaration><![CDATA[
+METHOD ClearLowerLeft
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearLowerRight" Id="{c62c112d-c7de-46ac-b6fb-3121f17adb6a}">
+      <Declaration><![CDATA[
+METHOD ClearLowerRight
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearUpperLeft" Id="{f2d8a5aa-e49a-4be9-8432-8e5668cf1a3e}">
+      <Declaration><![CDATA[
+METHOD ClearUpperLeft
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ClearUpperRight" Id="{f85cbc9a-9b92-41c9-85ce-0a0d89b4887f}">
+      <Declaration><![CDATA[
+METHOD ClearUpperRight
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="IsCalibrated" Id="{d983f7d3-9c09-47aa-a8e0-cd048dd8a7cc}">
       <Declaration><![CDATA[
 METHOD IsCalibrated : BOOL]]></Declaration>
       <Implementation>
         <ST><![CDATA[IsCalibrated := THIS^.bIsCalibrated;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Save" Id="{3961e1e5-3cb4-452a-a8e7-a2ec8f87e441}">
+      <Declaration><![CDATA[
+METHOD Save
+VAR_INPUT
+    nWindow	: INT;
+    fRotationStartAngle	: LREAL;
+    fRotationStopAngle	: LREAL;
+    fOscillationVelocity	: LREAL;
+    fOscillationRange	: LREAL;
+    nNumberOfRows	: INT;
+END_VAR
+VAR_OUTPUT
+    bError	: BOOL;
+    sErrorString	: T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="SetIsCalibrated" Id="{8e69450e-2e7b-408c-bfd8-ad3d41c2a492}">
@@ -24,6 +76,70 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.bIsCalibrated := bIsCalibrated;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetLowerLeft" Id="{c2763cd0-9bf7-4e09-9359-a6bc3cbac2d4}">
+      <Declaration><![CDATA[
+METHOD SetLowerLeft
+VAR_INPUT
+    (* [um]*)
+    x	: LREAL;
+    (* [um]*)
+    y	: LREAL;
+    (* [um]*)
+    z	: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetLowerRight" Id="{5fba21d4-6567-4375-98ed-ab3c3732b1ac}">
+      <Declaration><![CDATA[
+METHOD SetLowerRight
+VAR_INPUT
+    (* [um]*)
+    z	: LREAL;
+    (* [um]*)
+    x	: LREAL;
+    (* [um]*)
+    y	: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetUpperLeft" Id="{06374a01-34dc-4f2e-a34c-fa270037a2db}">
+      <Declaration><![CDATA[
+METHOD SetUpperLeft
+VAR_INPUT
+    (* [um]*)
+    z	: LREAL;
+    (* [um]*)
+    x	: LREAL;
+    (* [um]*)
+    y	: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetUpperRight" Id="{dd0c781d-bcfb-4004-b276-7beaac21503b}">
+      <Declaration><![CDATA[
+METHOD SetUpperRight
+VAR_INPUT
+    (* [um]*)
+    z	: LREAL;
+    (* [um]*)
+    x	: LREAL;
+    (* [um]*)
+    y	: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
   </POU>

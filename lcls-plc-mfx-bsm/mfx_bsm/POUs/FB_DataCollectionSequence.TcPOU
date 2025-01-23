@@ -5,13 +5,37 @@
 FUNCTION_BLOCK FB_DataCollectionSequence
 VAR
     iSystemCalibration : I_SystemCalibration;
+    iResetSequence : I_ResetSequence;
+    iTriggerManager : I_TriggerManager;
 
-    eSequence : (Waiting, DoingAthing, Error);
+    eSequence : E_DataCollectionSequenceStep;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
 // Run our sequence here
+
+CASE eSequence OF
+    E_DataCollectionSequenceStep.WaitingForStart :
+        // Do nothing
+
+    E_DataCollectionSequenceStep.WaitingForInitialTrigger :
+
+    E_DataCollectionSequenceStep.CalculateTimeToNextPoint :
+
+    E_DataCollectionSequenceStep.AccelerateToScanningSpeed :
+
+    E_DataCollectionSequenceStep.OperateAtScanningSpeedMakingMinuteAdjustments :
+
+    E_DataCollectionSequenceStep.GoToNextRow :
+
+    E_DataCollectionSequenceStep.WaitingForTriggerToStartNewRow :
+
+    E_DataCollectionSequenceStep.Error :
+        // Do nothing
+    E_DataCollectionSequenceStep.Done :
+        // Do nothing
+END_CASE
 ]]></ST>
     </Implementation>
     <Method Name="FB_Init" Id="{5079c59b-cf55-4794-bb0d-8c64eb0b5696}">
@@ -24,9 +48,27 @@ VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
     iSystemCalibration : I_SystemCalibration;
+    iResetSequence : I_ResetSequence;
+    iTriggerManager : I_TriggerManager;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.iSystemCalibration := iSystemCalibration;]]></ST>
+        <ST><![CDATA[THIS^.iSystemCalibration := iSystemCalibration;
+THIS^.iResetSequence := iResetSequence;
+THIS^.iTriggerManager := iTriggerManager;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetDataCollectionSequenceStep" Id="{da174e3d-6bb1-47ea-84e1-708d7d51c1d7}">
+      <Declaration><![CDATA[METHOD PRIVATE GetDataCollectionSequenceStep : E_DataCollectionSequenceStep]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetDataCollectionSequenceStep := THIS^.eSequence;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsRunningSequence" Id="{ce51a9e7-106f-48b2-8628-a88f9b4221f0}">
+      <Declaration><![CDATA[METHOD PUBLIC IsRunningSequence : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IsRunningSequence := (GetDataCollectionSequenceStep() <> E_DataCollectionSequenceStep.WaitingForStart) AND
+                     (GetDataCollectionSequenceStep() <> E_DataCollectionSequenceStep.Error) AND
+                     (GetDataCollectionSequenceStep() <> E_DataCollectionSequenceStep.Done);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Start" Id="{f16f3bf4-22ce-4e24-96ce-7b48c13031de}">
@@ -45,14 +87,20 @@ IF NOT iSystemCalibration.IsCalibrated() THEN
     RETURN;
 END_IF
 
-IF eSequence <> Waiting AND eSequence <> Error THEN
+IF NOT iResetSequence.IsReset() THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t start data collection sequence. System is not reset';
+    RETURN;
+END_IF
+
+IF eSequence <> E_DataCollectionSequenceStep.WaitingForStart AND eSequence <> E_DataCollectionSequenceStep.Error THEN
     bError := TRUE;
     sErrorString := 'Can$'t start data collection sequence. System is already running data collection sequence';
     RETURN;
 END_IF
 
 // Start the sequence
-eSequence := DoingAthing;
+eSequence := E_DataCollectionSequenceStep.WaitingForInitialTrigger;
 ]]></ST>
       </Implementation>
     </Method>

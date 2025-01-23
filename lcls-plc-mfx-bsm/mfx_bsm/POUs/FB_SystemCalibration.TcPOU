@@ -13,6 +13,19 @@ VAR
     bLowerRightCalibrated : BOOL;
     fbLowerLeft : FB_Vec3; // [um]
     bLowerLeftCalibrated : BOOL;
+
+    nWindowMin : INT;
+    nWindowMax : INT;
+    fRotationStartAngleMin : LREAL; // [°]
+    fRotationStartAngleMax : LREAL; // [°]
+    fRotationStopAngleMin : LREAL; // [°]
+    fRotationStopAngleMax : LREAL; // [°]
+    fOscillationVelocityMin : LREAL; // [°/s]
+    fOscillationVelocityMax : LREAL; // [°/s]
+    fOscillationRangeMin : LREAL; // [°]
+    fOscillationRangeMax : LREAL; // [°]
+    nNumberOfRowsMin : INT;
+    nNumberOfRowsMax : INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -67,7 +80,7 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
-    iSystemCalibration : I_SystemCalibration;
+
     nWindowMin : INT;
     nWindowMax : INT;
     fRotationStartAngleMin : LREAL; // [°]
@@ -82,28 +95,20 @@ VAR_INPUT
     nNumberOfRowsMax : INT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[ THIS^.iSystemCalibration := iSystemCalibration;
- THIS^.nWindowMin := nWindowMin;
- THIS^.nWindowMax := nWindowMax;
- THIS^.fRotationStartAngleMin := fRotationStartAngleMin;
- THIS^.fRotationStartAngleMax := fRotationStartAngleMax;
- THIS^.fRotationStopAngleMin := fRotationStopAngleMin;
- THIS^.fRotationStopAngleMax := fRotationStopAngleMax;
- THIS^.fOscillationVelocityMin := fOscillationVelocityMin;
- THIS^.fOscillationVelocityMax := fOscillationVelocityMax;
- THIS^.fOscillationRangeMin := fOscillationRangeMin;
- THIS^.fOscillationRangeMax := fOscillationRangeMax;
- THIS^.nNumberOfRowsMin := nNumberOfRowsMin;
- THIS^.nNumberOfRowsMax := nNumberOfRowsMax;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="GridIsValid" Id="{1fa4cd1f-f3eb-4a78-b343-dd744dfcd83c}">
-      <Declaration><![CDATA[METHOD PUBLIC GridIsValid : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[
+THIS^.nWindowMin := nWindowMin;
+THIS^.nWindowMax := nWindowMax;
+THIS^.fRotationStartAngleMin := fRotationStartAngleMin;
+THIS^.fRotationStartAngleMax := fRotationStartAngleMax;
+THIS^.fRotationStopAngleMin := fRotationStopAngleMin;
+THIS^.fRotationStopAngleMax := fRotationStopAngleMax;
+THIS^.fOscillationVelocityMin := fOscillationVelocityMin;
+THIS^.fOscillationVelocityMax := fOscillationVelocityMax;
+THIS^.fOscillationRangeMin := fOscillationRangeMin;
+THIS^.fOscillationRangeMax := fOscillationRangeMax;
+THIS^.nNumberOfRowsMin := nNumberOfRowsMin;
+THIS^.nNumberOfRowsMax := nNumberOfRowsMax;
+ ]]></ST>
       </Implementation>
     </Method>
     <Method Name="IsCalibrated" Id="{d28c1801-924c-4fd0-a352-92499ef39cc1}">
@@ -116,6 +121,46 @@ IsCalibrated := bUpperRightCalibrated AND
                 bUpperLeftCalibrated AND
                 bLowerRightCalibrated AND
                 bLowerLeftCalibrated;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsWithinRange_INT" Id="{e4647099-f44e-4d82-8f45-d2653de99001}">
+      <Declaration><![CDATA[
+METHOD PRIVATE IsWithinRange_INT : BOOL
+VAR_INPUT
+    Value : INT;
+    Maximum : INT;
+    Minimum : INT;
+    Inclusive : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF Inclusive THEN
+    IsWithinRange_INT := Value <= Maximum AND Value >= Minimum;
+ELSE
+    IsWithinRange_INT := Value < Maximum AND Value > Minimum;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="IsWithinRange_LREAL" Id="{84d3172a-01f9-4184-b5d2-a900b9004c9f}">
+      <Declaration><![CDATA[
+METHOD PRIVATE IsWithinRange_LREAL : BOOL
+VAR_INPUT
+    Value : LREAL;
+    Maximum : LREAL;
+    Minimum : LREAL;
+    Inclusive : BOOL := TRUE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+IF Inclusive THEN
+    IsWithinRange_LREAL := Value <= Maximum AND Value >= Minimum;
+ELSE
+    IsWithinRange_LREAL := Value < Maximum AND Value > Minimum;
+END_IF
 ]]></ST>
       </Implementation>
     </Method>
@@ -137,27 +182,47 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[
-IF NOT iSystemCalibration.IsCalibrated() THEN
+IF NOT IsCalibrated() THEN
     bError := TRUE;
     sErrorString := 'Can$'t save grid scan points. System is not calibrated';
     RETURN;
 END_IF
 
-IF nWindow < nWindowMin OR nWindow > nWindowMax THEN
+IF NOT IsWithinRange_INT(Value := nWindow, Maximum := nWindowMax, Minimum := nWindowMin) THEN
     bError := TRUE;
     sErrorString := 'Can$'t save grid scan points. Window number is out of range';
     RETURN;
 END_IF
 
-IF fRotationStartAngle < fRotationStartAngleMin OR fRotationStartAngle > fRotationStartAngleMax THEN
+IF NOT IsWithinRange_LREAL(Value := fRotationStartAngle, Maximum := fRotationStartAngleMax, Minimum := fRotationStartAngleMin) THEN
     bError := TRUE;
     sErrorString := 'Can$'t save grid scan points. Rotation start angle is out of range';
     RETURN;
 END_IF
 
-// TODO FILL OUT THE REST OF THE CHECKS
+IF NOT IsWithinRange_LREAL(Value := fRotationStopAngle, Maximum := fRotationStopAngleMax, Minimum := fRotationStopAngleMin) THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. Rotation stop angle is out of range';
+    RETURN;
+END_IF
 
+IF NOT IsWithinRange_LREAL(Value := fOscillationVelocity, Maximum := fOscillationVelocityMax, Minimum := fOscillationVelocityMin) THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. Oscillation velocity is out of range';
+    RETURN;
+END_IF
 
+IF NOT IsWithinRange_LREAL(Value := fOscillationRange, Maximum := fOscillationRangeMax, Minimum := fOscillationRangeMin) THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. Oscillation range is out of range';
+    RETURN;
+END_IF
+
+IF NOT IsWithinRange_INT(Value := nNumberOfRows, Maximum := nNumberOfRowsMax, Minimum := nNumberOfRowsMin) THEN
+    bError := TRUE;
+    sErrorString := 'Can$'t save grid scan points. Number of rows is out of range';
+    RETURN;
+END_IF
 ]]></ST>
       </Implementation>
     </Method>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TriggerManagerTestDouble" Id="{83d68cdb-b331-4489-93e7-4f577042af13}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TriggerManagerTestDouble IMPLEMENTS I_TriggerManager
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="GetAndResetTrigger" Id="{1a41ea64-f5bb-4476-a132-a58d8941b58e}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD GetAndResetTrigger
+VAR_OUTPUT
+    bLatchDetected	: BOOL;
+    (* [ns]*)
+    nLatchTime_ns	: ULINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -3,9 +3,86 @@
   <Itf Name="I_SystemCalibration" Id="{48301cdf-562c-4c97-ba90-6ac51224f9e7}">
     <Declaration><![CDATA[INTERFACE I_SystemCalibration
 ]]></Declaration>
+    <Method Name="ClearLowerLeft" Id="{2dcb3903-b63f-4b10-9b06-64b944ac7fb3}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearLowerLeft
+]]></Declaration>
+    </Method>
+    <Method Name="ClearLowerRight" Id="{08b5b378-89cd-476e-8db0-9b4df21aa0f4}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearLowerRight
+]]></Declaration>
+    </Method>
+    <Method Name="ClearUpperLeft" Id="{a7555853-aeff-41a7-a55c-6b15531a5473}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearUpperLeft
+]]></Declaration>
+    </Method>
+    <Method Name="ClearUpperRight" Id="{9ea5abcb-cf8f-4466-b138-487cd787ae56}">
+      <Declaration><![CDATA[
+METHOD PUBLIC ClearUpperRight
+]]></Declaration>
+    </Method>
     <Method Name="IsCalibrated" Id="{1b048ef3-40fe-4063-b477-6ec0325a4c86}">
       <Declaration><![CDATA[
 METHOD IsCalibrated : BOOL
+]]></Declaration>
+    </Method>
+    <Method Name="Save" Id="{baed32c3-e0a3-42f3-bf55-8e69769a864d}">
+      <Declaration><![CDATA[
+METHOD Save
+VAR_INPUT
+    nWindow : INT;
+    fRotationStartAngle : LREAL;
+    fRotationStopAngle : LREAL;
+    fOscillationVelocity : LREAL;
+    fOscillationRange : LREAL;
+    nNumberOfRows : INT;
+END_VAR
+VAR_OUTPUT
+    bError : BOOL;
+    sErrorString : T_MaxString;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetLowerLeft" Id="{1e2d8944-1740-47f0-accd-f9cd7e3e34ea}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetLowerLeft
+VAR_INPUT
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+    z : LREAL; // [um]
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetLowerRight" Id="{a8dd74c7-9db4-4afc-88e0-fa71f4b7f85a}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetLowerRight
+VAR_INPUT
+    z : LREAL; // [um]
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetUpperLeft" Id="{6e4a43e5-c8cb-452f-8d45-d884567716e2}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetUpperLeft
+VAR_INPUT
+    z : LREAL; // [um]
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="SetUpperRight" Id="{24aa1974-c81b-4b81-a1d3-26f1b3bb8e00}">
+      <Declaration><![CDATA[
+METHOD PUBLIC SetUpperRight
+VAR_INPUT
+    z : LREAL; // [um]
+    x : LREAL; // [um]
+    y : LREAL; // [um]
+END_VAR
 ]]></Declaration>
     </Method>
   </Itf>

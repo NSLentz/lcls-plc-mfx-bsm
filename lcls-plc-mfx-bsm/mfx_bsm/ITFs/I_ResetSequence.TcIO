@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_ResetSequence" Id="{be808ad5-efdc-4a87-8ed1-6a14424540b4}">
+    <Declaration><![CDATA[INTERFACE I_ResetSequence
+]]></Declaration>
+    <Method Name="IsReset" Id="{45dc7d4e-bdb8-4b6d-b313-ba9b6ff84d11}">
+      <Declaration><![CDATA[METHOD IsReset : BOOL]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

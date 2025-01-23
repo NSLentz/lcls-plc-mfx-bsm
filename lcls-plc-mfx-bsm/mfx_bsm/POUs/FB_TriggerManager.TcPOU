@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TriggerManager" Id="{6f90d946-2f37-4b1a-93b8-148c912aa4e6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TriggerManager IMPLEMENTS I_TriggerManager
+VAR
+    nEL1252LatchPos AT %I* : ULINT;
+    nEL1252LatchPosPreviousCycle : ULINT;
+    bNewLatchPending : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+IF nEL1252LatchPos <> nEL1252LatchPosPreviousCycle THEN
+    bNewLatchPending := TRUE;
+END_IF
+nEL1252LatchPosPreviousCycle := nEL1252LatchPos;
+]]></ST>
+    </Implementation>
+    <Method Name="GetAndResetTrigger" Id="{19ec8f4e-eec6-4c53-8172-d0a6638ebf65}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD GetAndResetTrigger
+VAR_OUTPUT
+    bLatchDetected	: BOOL;
+    (* [ns]*)
+    nLatchTime_ns	: ULINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+bLatchDetected := bNewLatchPending;
+
+nLatchTime_ns := nEL1252LatchPos;
+
+bNewLatchPending := FALSE;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

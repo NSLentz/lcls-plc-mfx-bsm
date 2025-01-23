@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_TriggerManager" Id="{a096b8e4-37b6-42e8-9cff-ecc2fe66ae1d}">
+    <Declaration><![CDATA[INTERFACE I_TriggerManager
+]]></Declaration>
+    <Method Name="GetAndResetTrigger" Id="{3c1bd6da-2200-49ff-8c57-dca902b77851}">
+      <Declaration><![CDATA[METHOD GetAndResetTrigger
+VAR_OUTPUT
+    bLatchDetected : BOOL;
+    nLatchTime_ns : ULINT; // [ns]
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

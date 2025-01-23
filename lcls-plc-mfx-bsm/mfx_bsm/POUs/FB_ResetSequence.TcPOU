@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ResetSequence" Id="{872eab31-dd48-4741-9e11-11730b82cd7c}" SpecialFunc="None">
+    <Declaration><![CDATA[
+FUNCTION_BLOCK FB_ResetSequence IMPLEMENTS I_ResetSequence
+VAR
+
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="IsReset" Id="{3d1237a0-fc42-483a-85ce-67f0844a3455}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD IsReset : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

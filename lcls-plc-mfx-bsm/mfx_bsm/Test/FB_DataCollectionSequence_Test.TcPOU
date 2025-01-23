@@ -16,7 +16,11 @@ GivenThatSystemIsNotCalibratedDontAllowToStartSequence();
 METHOD PRIVATE GivenThatSystemIsNotCalibratedDontAllowToStartSequence
 VAR
     fbSystemCalibrationTestDouble : FB_SystemCalibrationTestDouble;
-    fbDataCollectionSequence : FB_DataCollectionSequence(iSystemCalibration := fbSystemCalibrationTestDouble);
+    fbResetSequenceTestDouble : FB_ResetSequenceTestDouble;
+    fbTriggerManagerTestDouble : FB_TriggerManagerTestDouble;
+    fbDataCollectionSequence : FB_DataCollectionSequence(iSystemCalibration := fbSystemCalibrationTestDouble,
+                                                         iResetSequence := fbResetSequenceTestDouble,
+                                                         iTriggerManager := fbTriggerManagerTestDouble);
 
     bErrorReturn : BOOL;
     sErrorStringReturn : T_MaxString;
@@ -26,7 +30,9 @@ END_VAR
         <ST><![CDATA[
 TEST(__POUNAME());
 
+fbResetSequenceTestDouble.SetIsReset(bIsReset := TRUE);
 fbSystemCalibrationTestDouble.SetIsCalibrated(bIsCalibrated := FALSE);
+
 
 fbDataCollectionSequence.Start(bError => bErrorReturn,
                                sErrorString => sErrorStringReturn);

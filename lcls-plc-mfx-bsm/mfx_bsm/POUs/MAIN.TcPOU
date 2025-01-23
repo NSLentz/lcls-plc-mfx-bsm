@@ -1,20 +1,117 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="MAIN" Id="{7b6ce721-0982-4363-925f-4dbc20de9fef}" SpecialFunc="None">
+  <POU Name="Main" Id="{7b6ce721-0982-4363-925f-4dbc20de9fef}" SpecialFunc="None">
     <Declaration><![CDATA[
-PROGRAM MAIN
+PROGRAM Main
 VAR
-    fbSystemCalibration : FB_SystemCalibration;
-    fbDataCollectionSequence : FB_DataCollectionSequence(iSystemCalibration := fbSystemCalibration);
+    fbSystemCalibration : FB_SystemCalibration(nWindowMin := 2,
+                                               nWindowMax := 5,
+                                               fRotationStartAngleMin := 0.0,
+                                               fRotationStartAngleMax  := 90.0,
+                                               fRotationStopAngleMin := 0.0,
+                                               fRotationStopAngleMax := 90.0,
+                                               fOscillationVelocityMin := 10.0,
+                                               fOscillationVelocityMax := 45,
+                                               fOscillationRangeMin := 20.0,
+                                               fOscillationRangeMax := 30.0,
+                                               nNumberOfRowsMin := 1,
+                                               nNumberOfRowsMax := 6);
+    fbSystemCalibrationUserInput : FB_SystemCalibrationUserInput(iSystemCalibration := fbSystemCalibration);
+    fbResetSequence : FB_ResetSequence;
+    fbTriggerManager : FB_TriggerManager;
 
-    //fbGridScanPoints : FB_GridScanPoints(iSystemCalibration := fbSystemCalibration,
-    //                                     nWindowMin := Constants.nGRID_SCAN_POINT_WINDOW_MIN,
-    //                                     nWindowMax := Constants.nGRID_SCAN_POINT_WINDOW_MAX);
+    fbDataCollectionSequence : FB_DataCollectionSequence(iSystemCalibration := fbSystemCalibration,
+                                                         iResetSequence := fbResetSequence,
+                                                         iTriggerManager := fbTriggerManager);
+
+    M1 : ST_MotionStage;
+    fbScanningAxisXLinear : FB_MotionStage;
+    M2 : ST_MotionStage;
+    fbScanningAxisXRotation : FB_MotionStage;
+    M3 : ST_MotionStage;
+    fbScanningAxisYLinear : FB_MotionStage;
+    M4 : ST_MotionStage;
+    fbScanningAxisZLinear : FB_MotionStage;
+
+    M5 : ST_MotionStage;
+    fbSampleAxisURotation : FB_MotionStage;
+    M6 : ST_MotionStage;
+    fbSampleAxisVRotation : FB_MotionStage;
+    M7 : ST_MotionStage;
+    fbGonioAxisLinearX : FB_MotionStage;
+    M8 : ST_MotionStage;
+    fbGonioAxisLinearY : FB_MotionStage;
+    M9 : ST_MotionStage;
+    fbGonioAxisLinearZ : FB_MotionStage;
+    M10 : ST_MotionStage;
+    fbOnAxisLinearX : FB_MotionStage;
+    M11 : ST_MotionStage;
+    fbOnAxisLinearY : FB_MotionStage;
+    M12 : ST_MotionStage;
+    fbOnAxisLinearZ : FB_MotionStage;
+    M13 : ST_MotionStage;
+    fbOnAxisRotationPitch : FB_MotionStage;
+    M14 : ST_MotionStage;
+    fbOnAxisRotationYaw : FB_MotionStage;
+    M15 : ST_MotionStage;
+    fbCapillaryAxisLinearX : FB_MotionStage;
+    M16 : ST_MotionStage;
+    fbCapillaryAxisLinearY : FB_MotionStage;
+    M17 : ST_MotionStage;
+    fbCapillaryAxisLinearZ : FB_MotionStage;
+    M18 : ST_MotionStage;
+    fbCapillaryAxisRotationPitch : FB_MotionStage;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[
+fbTriggerManager();
+
+fbSystemCalibrationUserInput();
+
+fbResetSequence();
+
 fbDataCollectionSequence();
+
+IF fbDataCollectionSequence.IsRunningSequence() THEN
+    M1.bExecute := FALSE;
+    M2.bExecute := FALSE;
+    M3.bExecute := FALSE;
+    M4.bExecute := FALSE;
+    M5.bExecute := FALSE;
+    M6.bExecute := FALSE;
+    M7.bExecute := FALSE;
+    M8.bExecute := FALSE;
+    M9.bExecute := FALSE;
+    M10.bExecute := FALSE;
+    M11.bExecute := FALSE;
+    M12.bExecute := FALSE;
+    M13.bExecute := FALSE;
+    M14.bExecute := FALSE;
+    M15.bExecute := FALSE;
+    M16.bExecute := FALSE;
+    M17.bExecute := FALSE;
+    M18.bExecute := FALSE;
+END_IF
+
+fbScanningAxisXLinear(stMotionStage := M1);
+fbScanningAxisXRotation(stMotionStage := M2);
+fbScanningAxisYLinear(stMotionStage := M3);
+fbScanningAxisZLinear(stMotionStage := M4);
+fbSampleAxisURotation(stMotionStage := M5);
+fbSampleAxisVRotation(stMotionStage := M6);
+fbGonioAxisLinearX(stMotionStage := M7);
+fbGonioAxisLinearY(stMotionStage := M8);
+fbGonioAxisLinearZ(stMotionStage := M9);
+fbOnAxisLinearX(stMotionStage := M10);
+fbOnAxisLinearY(stMotionStage := M11);
+fbOnAxisLinearZ(stMotionStage := M12);
+fbOnAxisRotationPitch(stMotionStage := M13);
+fbOnAxisRotationYaw(stMotionStage := M14);
+fbCapillaryAxisLinearX(stMotionStage := M15);
+fbCapillaryAxisLinearY(stMotionStage := M16);
+fbCapillaryAxisLinearZ(stMotionStage := M17);
+fbCapillaryAxisRotationPitch(stMotionStage := M18);
 ]]></ST>
     </Implementation>
   </POU>
